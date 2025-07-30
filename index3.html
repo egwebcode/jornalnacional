@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JORNAL NACIONAL GLOBO</title>
+  <style>
+    :root {
+      --primaria: #001f3f;
+      --secundaria: #c0392b;
+      --fundo: #f9f9f9;
+      --texto: #333;
+      --branco: #fff;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--fundo);
+      color: var(--texto);
+    }
+
+    header {
+      background: var(--primaria);
+      color: var(--branco);
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    header img {
+      height: 45px;
+      margin-right: 15px;
+    }
+
+    header h1 {
+      font-size: 20px;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .navegacao {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      padding: 10px;
+      background: #eee;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .navegacao button {
+      background-color: var(--primaria);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .navegacao button:hover {
+      background-color: var(--secundaria);
+    }
+
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .titulo-noticia {
+      font-size: 22px;
+      color: var(--secundaria);
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+      animation: slideDown 0.6s ease;
+    }
+
+    video {
+      display: block;
+      margin: 0 auto;
+      height: 90vh;
+      aspect-ratio: 9/16;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      object-fit: cover;
+    }
+
+    .descricao {
+      margin-top: 20px;
+      font-size: 16px;
+      line-height: 1.6;
+      text-align: justify;
+    }
+
+    .compartilhar {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .btn-share {
+      background-color: var(--secundaria);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-share:hover {
+      background-color: #e74c3c;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: var(--primaria);
+      color: white;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 16px;
+      }
+      .titulo-noticia {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo Jornal Nacional Globo">
+    <h1>Jornal Nacional Globo</h1>
+  </header>
+
+  <nav class="navegacao">
+    <button onclick="navegar(-1)">⬅ Anterior</button>
+    <span id="pagina-atual">Página 3</span>
+    <button onclick="navegar(1)">Próxima ➡</button>
+  </nav>
+
+  <main>
+    <div class="titulo-noticia">
+      HOMEM É FLAGRADO EM ATITUDE SUSPEITA COM JUMENTA EM ÁREA DE MATA<br>
+      CENAS GERARAM REVOLTA ENTRE MORADORES
+    </div>
+
+    <video controls autoplay muted playsinline>
+      <source src="video3.mp4" type="video/mp4">
+      Seu navegador não suporta vídeo.
+    </video>
+
+    <div class="descricao">
+      Um episódio inusitado gerou indignação em uma comunidade rural, onde um homem foi flagrado por
+      populares em atitude suspeita com uma jumenta em meio ao mato. O vídeo feito por testemunhas mostra o momento
+      em que o homem é surpreendido e tenta fugir do local. As imagens rapidamente se espalharam nas redes sociais
+      e causaram revolta. Autoridades locais foram acionadas para investigar o ocorrido.
+    </div>
+
+    <div class="compartilhar">
+      <button class="btn-share" onclick="compartilhar()">Compartilhar Notícia</button>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Jornal Nacional Globo - Todos os direitos reservados
+  </footer>
+
+  <script>
+    function compartilhar() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'Jornal Nacional Globo',
+          text: 'Flagrante na zona rural causa polêmica nas redes. Assista agora!',
+          url: window.location.href
+        }).catch(err => console.log('Erro ao compartilhar:', err));
+      } else {
+        alert('Compartilhamento não suportado neste navegador.');
+      }
+    }
+
+    const paginas = ["index.html", "index2.html", "index3.html"];
+    const atual = paginas.indexOf(location.pathname.split("/").pop());
+    document.getElementById("pagina-atual").innerText = `Página ${atual + 1}`;
+
+    function navegar(direcao) {
+      const destino = atual + direcao;
+      if (destino >= 0 && destino < paginas.length) {
+        window.location.href = paginas[destino];
+      } else {
+        alert("Sem mais páginas.");
+      }
+    }
+  </script>
+</body>
+</html>
